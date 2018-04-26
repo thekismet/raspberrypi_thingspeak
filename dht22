@@ -3,10 +3,13 @@ import RPi.GPIO as GPIO
 from time import sleep
 import Adafruit_DHT
 import urllib2
+
 myAPI = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
 def getSensorData():
    RH, T = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 17)
    return (str(T), str(RH))
+   
 def main():
    print 'starting...'
    baseURL = 'http://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -21,6 +24,7 @@ def main():
        except:
            print 'exiting.'
            break
+
 # call main
 if __name__ == '__main__':
    main()
