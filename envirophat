@@ -1,0 +1,43 @@
+
+import sys
+import RPi.GPIO as GPIO
+import os
+from time import sleep
+from envirophat import light, weather
+import urllib2
+
+myAPI = "xxxxxxxxxxxxxxxxxxx"  # API Key from thingSpeak.com channel
+myDelay = 60 #how many seconds between posting data
+
+def getSensorData():
+    print "In getSensorData";
+    temperature, pressure, lux = (weather.temperature() -5, weather.pressure()/100, light.light())
+    if temperature is not None and pressure is not None and lux is not None:
+        print('Temp={0:0.1f}*C  Pressure={1:0.1f} hPa  Light={2:.0f}'.format(temperature, pressure, lux))
+    else:
+        print('Failed to get reading. Try again!')
+    return (str(temperature), str(pressure), str(lux))
+
+
+def main():
+    print 'starting...'
+    baseURL = 'http://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    print baseURL
+    while True:
+        try:
+            print "Reading Sensor Data now"
+            TW, RHW, LUX = getSensorData()
+            print TW + " " + RHW + " " + LUX + " "
+            f = urllib2.urlopen(baseURL + "&field1=%s&field2=%s&field3=%s" % (TW, RHW, LUX))
+            print f.read()
+            f.close()
+            sleep(int(myDelay))
+        except Exception as e:
+            print e
+            print 'exiting.'
+            break
+
+# call main
+
+if __name__ == '__main__':
+    main()
