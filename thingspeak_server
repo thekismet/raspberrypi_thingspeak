@@ -1,0 +1,42 @@
+# to install thingspeak on raspbian jessie of raspberry pi
+# http://downloads.raspberrypi.org/raspbian/images/raspbian-2017-07-05/
+
+# Install required packages
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:brightbox/ruby-ng
+sudo apt-get -y install build-essential mysql-server mysql-client libmysqlclient-dev 
+sudo apt-get -y install libxml2-dev libxslt-dev git-core curl rubygems
+# sudo apt-get -y install ruby2.1 ruby2.1-dev
+
+## Install ruby environment
+gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+\curl -sSL https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm install 2.1.0
+rvm use 2.1.0 --default
+
+### Install thingspeak
+git clone https://github.com/iobridge/thingspeak.git
+cd thingspeak
+gem install minitest -v '4.7.5'
+gem install json -v '1.8.1'
+gem install bundler
+bundle install
+cp config/database.yml.example config/database.yml
+rake db:create
+rake db:schema:load
+rails server webrick
+
+#### Fix tzinfo-data
+#### Fetching tzinfo-data 1.2013.8
+#### Downloading tzinfo-data-1.2013.8 revealed dependencies not in the API or the lockfile (tzinfo (>= 1.0.0)).
+#### Either installing with `--full-index` or running `bundle update tzinfo-data` should fix the problem.
+####
+#### In Gemfile:
+####   tzinfo-data
+gem install tzinfo-data
+nano Gemfile.lock
+#### fix "tzinfo-data (1.2013.8)" to "tzinfo-data (1.2018.4)" or latest version
