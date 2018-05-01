@@ -72,7 +72,7 @@ void Client_Request() {
 
 
 unsigned long pMil = 0;
-const long interval = 30000;  //send every 30 seconds
+const long interval = 60000;  //send every 60 seconds
 
 void loop() {
   while (client.available()) {
