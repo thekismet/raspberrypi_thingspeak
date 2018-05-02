@@ -40,3 +40,7 @@ rails server webrick
 gem install tzinfo-data
 nano Gemfile.lock
 #### fix "tzinfo-data (1.2013.8)" to "tzinfo-data (1.2018.4)" or latest version
+
+##### block new user
+:~/thingspeak/app/views/devise/registrations $ nano new.html.erb
+
