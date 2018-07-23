@@ -15,6 +15,7 @@ sudo apt-get -y install libxml2-dev libxslt-dev git-core curl rubygems
 gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 \curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
+## or ## source /usr/local/rvm/scripts/rvm
 rvm install 2.1.0
 rvm use 2.1.0 --default
 
